@@ -1,0 +1,51 @@
+{
+  "name": "voltron-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "npm run watch-ts",
+    "build-ts": "tsc -p src",
+    "quick-build": "npm run build-ts && npm run serve",
+    "serve": "set NODE_ENV=development && node dist/server.js",
+    "start-dev": "set NODE_ENV=development && nodemon dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-ts": "tsc-watch -w -p src --onSuccess \"npm run serve\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "helmet": "^3.12.0",
+    "jsonwebtoken": "^8.2.0",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.11.5",
+    "mongoose-unique-validator": "^2.0.0",
+    "morgan": "^1.8.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "validator": "^9.4.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.36",
+    "@types/lodash": "^4.14.71",
+    "@types/mongoose": "^4.7.19",
+    "@types/node": "^8.0.17",
+    "concurrently": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "nodemon": "^1.11.0",
+    "tsc-watch": "^1.0.17",
+    "typescript": "^2.4.2"
+  }
+}
