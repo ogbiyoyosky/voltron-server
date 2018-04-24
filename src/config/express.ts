@@ -44,11 +44,22 @@ class Express {
     }
 
     private setupMongo() {
+
+        var options = {
+            useMongoClient: true,
+            autoIndex: false, // Don't build indexes
+            reconnectInterval: 500, // Reconnect every 500ms
+            poolSize: 10, // Maintain up to 10 socket connections
+            // If not connected, return errors immediately rather than waiting for reconnect
+            bufferMaxEntries: 0
+          };
         // 
         // Connect to mongo using mongoose
         // @todo: fix "open()" DeprecationWarning warning
-        mongoose.connect(process.env.MONGO_URI, {
-            db: { safe: true }
+        mongoose.connect(process.env.MONGO_URI, options, (err)=>{
+            if(err){
+                console.log(err);
+            }
         });
     }
 

@@ -212,7 +212,7 @@ var UserController = /** @class */ (function () {
                         // 
                         // Error response
                         res.send({
-                            message: 'Could not create th item',
+                            message: 'Could not create the item',
                             err: err_4
                         });
                         return [3 /*break*/, 4];

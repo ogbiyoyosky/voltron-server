@@ -32,11 +32,21 @@ var Express = /** @class */ (function () {
         this.app.use(passport.initialize());
     };
     Express.prototype.setupMongo = function () {
+        var options = {
+            useMongoClient: true,
+            autoIndex: false,
+            reconnectInterval: 500,
+            poolSize: 10,
+            // If not connected, return errors immediately rather than waiting for reconnect
+            bufferMaxEntries: 0
+        };
         // 
         // Connect to mongo using mongoose
         // @todo: fix "open()" DeprecationWarning warning
-        mongoose.connect(process.env.MONGO_URI, {
-            db: { safe: true }
+        mongoose.connect(process.env.MONGO_URI, options, function (err) {
+            if (err) {
+                console.log(err);
+            }
         });
     };
     Express.prototype.setupRoutes = function () {
