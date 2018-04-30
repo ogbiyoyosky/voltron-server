@@ -16,22 +16,21 @@ export default class UserController {
 
             // 
             // Get data
-            let result = await OrderModel.find().exec();
+            let results = await OrderModel.find().exec();
             const status = res.statusCode;
 
             // 
             // Response
             res.send({
-                message: 'it works! We got all items',
-                result: result,
-                status: status
+                results,
+                status
             });
         } catch (err) {
 
             // 
             // Error response
             res.send({
-                message: 'Could not get items',
+                message: 'Could not get orders',
                 err: err
             });
         }
@@ -80,31 +79,21 @@ export default class UserController {
      */
     public static async createOrder(req: Request, res: Response, next: NextFunction) {
         
-        let { username, items } = req.body;
+        let { user, items } = req.body;
         
-        const user = UserModel.findOne({ username }).exec();
-
-        items = JSON.parse(items);
-
-        items.map(function (item) {
-            
+        // Create model
+        let orderModel = new OrderModel({
+            user,
+            items
         });
+        // 
+        // Save
+        await orderModel.save();
 
-        res.json(items);
-
-        // // Create model
-        // let orderModel = new OrderModel({
-        //     user,
-        //     items
-        // });
-        // // 
-        // // Save
-        // await orderModel.save();
-
-        // res.send({
-        //     message: `Created order with the id: ${orderModel._id}`,
-        //     model: orderModel
-        // });
+        res.send({
+            message: `Created order with the id: ${orderModel._id}`,
+            model: orderModel
+        });
     }
 
     public static async deleteOrder(req: Request, res: Response, next: NextFunction) {

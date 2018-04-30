@@ -33,11 +33,8 @@ var Express = /** @class */ (function () {
     };
     Express.prototype.setupMongo = function () {
         var options = {
-            useMongoClient: true,
             autoIndex: false,
             reconnectInterval: 500,
-            poolSize: 10,
-            // If not connected, return errors immediately rather than waiting for reconnect
             bufferMaxEntries: 0
         };
         // 

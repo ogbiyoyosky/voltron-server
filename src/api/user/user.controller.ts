@@ -157,7 +157,8 @@ export default class UserController {
       .then(user => {
         res.status(201).send({
           data: {
-            type: "users",
+            type: "user",
+            user,
             id: user._id,
             token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
           }

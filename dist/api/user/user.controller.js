@@ -203,7 +203,8 @@ var UserController = /** @class */ (function () {
                 .then(function (user) {
                 res.status(201).send({
                     data: {
-                        type: "users",
+                        type: "user",
+                        user: user,
                         id: user._id,
                         token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
                     }

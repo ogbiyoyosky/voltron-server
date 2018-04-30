@@ -44,7 +44,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var order_model_1 = require("./order.model");
-var user_model_1 = require("../user/user.model");
 var UserController = /** @class */ (function () {
     function UserController() {
     }
@@ -56,20 +55,19 @@ var UserController = /** @class */ (function () {
      */
     UserController.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var result, status_1, err_1;
+            var results, status_1, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, order_model_1.default.find().exec()];
                     case 1:
-                        result = _a.sent();
+                        results = _a.sent();
                         status_1 = res.statusCode;
                         // 
                         // Response
                         res.send({
-                            message: 'it works! We got all items',
-                            result: result,
+                            results: results,
                             status: status_1
                         });
                         return [3 /*break*/, 3];
@@ -78,7 +76,7 @@ var UserController = /** @class */ (function () {
                         // 
                         // Error response
                         res.send({
-                            message: 'Could not get items',
+                            message: 'Could not get orders',
                             err: err_1
                         });
                         return [3 /*break*/, 3];
@@ -135,15 +133,28 @@ var UserController = /** @class */ (function () {
      */
     UserController.createOrder = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, username, items, user;
+            var _a, user, items, orderModel;
             return __generator(this, function (_b) {
-                _a = req.body, username = _a.username, items = _a.items;
-                user = user_model_1.default.findOne({ username: username }).exec();
-                items = JSON.parse(items);
-                items.map(function (item) {
-                });
-                res.json(items);
-                return [2 /*return*/];
+                switch (_b.label) {
+                    case 0:
+                        _a = req.body, user = _a.user, items = _a.items;
+                        orderModel = new order_model_1.default({
+                            user: user,
+                            items: items
+                        });
+                        // 
+                        // Save
+                        return [4 /*yield*/, orderModel.save()];
+                    case 1:
+                        // 
+                        // Save
+                        _b.sent();
+                        res.send({
+                            message: "Created order with the id: " + orderModel._id,
+                            model: orderModel
+                        });
+                        return [2 /*return*/];
+                }
             });
         });
     };
