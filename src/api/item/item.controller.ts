@@ -166,7 +166,7 @@ export default class UserController {
             // 
             // Error response
             res.send({
-                message: 'Could not create th item',
+                message: 'item could not be updated',
                 err: err
             });
         }

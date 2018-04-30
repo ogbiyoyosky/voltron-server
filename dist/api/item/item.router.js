@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var item_controller_1 = require("./item.controller");
+var passport = require("passport");
 var ItemRouter = /** @class */ (function () {
     /*--------  Constructor  --------*/
     function ItemRouter() {
@@ -16,7 +17,7 @@ var ItemRouter = /** @class */ (function () {
      */
     ItemRouter.prototype.init = function () {
         this.router.put('/:_id', item_controller_1.default.updateItem);
-        this.router.get('/', item_controller_1.default.getAll);
+        this.router.get('/', passport.authenticate('jwt', { session: false }), item_controller_1.default.getAll);
         this.router.get('/:_id', item_controller_1.default.getItem);
         this.router.post('/', item_controller_1.default.createItem);
         this.router.delete('/:_id', item_controller_1.default.deleteItem);

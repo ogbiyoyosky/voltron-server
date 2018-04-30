@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files\Yarn\bin\yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Program Files\Yarn\bin\yarn.js add mongoose: ^5.0.0
 
 PATH: 
-  C:\Users\SUPER_GLOBAL\bin;C:\Program Files\Git\mingw32\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw32\bin;C:\Program Files\Git\usr\bin;C:\Users\SUPER_GLOBAL\bin;C:\xampp\php;C:\Program Files\ActivIdentity\ActivClient;C:\Program Files\Hewlett-Packard\IAM\bin;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Yarn\bin;C:\Program Files\cURL\bin;C:\Program Files\PuTTY;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\SUPER_GLOBAL\AppData\Roaming\Composer\vendor\bin;C:\Users\SUPER_GLOBAL\AppData\Local\Yarn\.bin;C:\Users\SUPER_GLOBAL\Downloads\Programs\PortableGit\bin;C:\Users\SUPER_GLOBAL\AppData\Roaming\npm;C:\Program Files\MongoDB\Server\3.2\bin;C:\Program Files\Microsoft VS Code\bin;C:\Python27;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Program Files\Git\mingw32\bin;C:\Program Files\Git\usr\bin;C:\Users\SUPER_GLOBAL\bin;C:\xampp\php;C:\Program Files\ActivIdentity\ActivClient;C:\Program Files\Hewlett-Packard\IAM\bin;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Yarn\bin;C:\Program Files\cURL\bin;C:\Program Files\PuTTY;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\SUPER_GLOBAL\AppData\Roaming\Composer\vendor\bin;C:\Users\SUPER_GLOBAL\AppData\Local\Yarn\.bin;C:\Users\SUPER_GLOBAL\Downloads\Programs\PortableGit\bin;C:\Users\SUPER_GLOBAL\AppData\Roaming\npm;C:\Program Files\MongoDB\Server\3.2\bin;C:\Program Files\Microsoft VS Code\bin;C:\Python27
 
 Yarn version: 
   0.19.1
@@ -25,6 +25,7 @@ npm manifest:
     "scripts": {
       "dev": "npm run watch-ts",
       "build-ts": "tsc -p src",
+      "quick-build": "npm run build-ts && npm run serve",
       "serve": "set NODE_ENV=development && node dist/server.js",
       "start-dev": "set NODE_ENV=development && nodemon dist/server.js",
       "test": "echo \"Error: no test specified\" && exit 1",
@@ -43,7 +44,7 @@ npm manifest:
       "helmet": "^3.12.0",
       "jsonwebtoken": "^8.2.0",
       "jwt-simple": "^0.5.1",
-      "mongoose": "^4.11.5",
+      "mongoose": "^5.0.0",
       "mongoose-unique-validator": "^2.0.0",
       "morgan": "^1.8.2",
       "passport": "^0.4.0",
@@ -58,7 +59,7 @@ npm manifest:
       "@types/mongoose": "^4.7.19",
       "@types/node": "^8.0.17",
       "concurrently": "^3.5.0",
-      "dotenv": "^4.0.0",
+      "dotenv": "^5.0.1",
       "nodemon": "^1.11.0",
       "tsc-watch": "^1.0.17",
       "typescript": "^2.4.2"
@@ -714,9 +715,9 @@ Lockfile:
     dependencies:
       is-obj "^1.0.0"
   
-  dotenv@^4.0.0:
-    version "4.0.0"
-    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+  dotenv@^5.0.1:
+    version "5.0.1"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   
   duplexer3@^0.1.4:
     version "0.1.4"
@@ -2676,4 +2677,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\SUPER_GLOBAL\Documents\angular5-app\voltron-server\node_modules\.bcrypt.DELETE\lib\binding\bcrypt_lib.node'
+  Error: mongoose:: Invalid URI "mongoose:/"
+      at Request.init (C:\Program Files\Yarn\node_modules\request\request.js:274:31)
+      at new Request (C:\Program Files\Yarn\node_modules\request\request.js:128:8)
+      at request (C:\Program Files\Yarn\node_modules\request\index.js:54:10)
+      at RequestManager.execute (C:\Program Files\Yarn\lib\util\request-manager.js:354:17)
+      at RequestManager.shiftQueue (C:\Program Files\Yarn\lib\util\request-manager.js:381:10)
+      at Promise (C:\Program Files\Yarn\lib\util\request-manager.js:166:12)
+      at new Promise (<anonymous>)
+      at RequestManager.request (C:\Program Files\Yarn\lib\util\request-manager.js:164:21)
+      at NpmRegistry.request (C:\Program Files\Yarn\lib\registries\npm-registry.js:107:32)
+      at C:\Program Files\Yarn\lib\resolvers\registries\npm-resolver.js:111:54
