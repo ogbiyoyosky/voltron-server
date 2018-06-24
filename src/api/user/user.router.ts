@@ -1,5 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import UserController from './user.controller';
+import * as passport from 'passport';
+let Passport = require('../../config/passport')(passport);
 
 export class UserRouter {
 
@@ -27,7 +29,7 @@ export class UserRouter {
     init () {
         this.router.put('/:username', UserController.update);
         this.router.get('/', UserController.getAll);
-        this.router.get('/:username', UserController.getUser);
+        this.router.get('/:username', passport.authenticate('jwt', {session: false}),UserController.getUser);
         this.router.post('/', UserController.create);
         this.router.post('/authenticate', UserController.authenticate);
     }

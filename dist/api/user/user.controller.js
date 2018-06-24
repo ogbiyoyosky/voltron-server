@@ -206,7 +206,8 @@ var UserController = /** @class */ (function () {
                         type: "user",
                         user: user,
                         id: user._id,
-                        token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
+                        token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", ""),
+                        message: "Account successfully created"
                     }
                 });
             })
@@ -334,9 +335,7 @@ var UserController = /** @class */ (function () {
                                         data: {
                                             type: "users",
                                             id: user._id,
-                                            attributes: {
-                                                email: user['email']
-                                            },
+                                            user: user,
                                             token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
                                         }
                                     });

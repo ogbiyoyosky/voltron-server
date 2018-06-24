@@ -11,20 +11,39 @@ export default class UserController {
      */
     public static async getAll(req: Request, res: Response, next: NextFunction) {
 
-        try {
+        var pageNo = parseInt(req.query.pageNo)
+        var size = parseInt(req.query.size)
+        var query = {
+            skip: size * (pageNo - 1),
+            limit: size
+        }
 
+        try {
+            if(pageNo < 0 || pageNo === 0) {
+                res.send({"error" : true,"message" : "invalid page number, should start with 1"})
+            }
+            query.skip = size * (pageNo - 1)
+            query.limit = size
             // 
             // Get data
-            let result = await Model.find().exec();
-            const status = res.statusCode;
+            let result = await Model.count({}, (err,totalCount)=> {
+                if(err) {
+                    res.send({"error" : true,"message" : "Error fetching data"});
+                }
 
-            // 
-            // Response
-            res.send({
-                message: 'it works! We got all items',
-                result: result,
-                status: status
-            });
+                Model.find({},{},query,function(err,data) {
+
+                    if(err){
+                        res.send({"error" : true,"message" : "Error fetching data"})
+                    } else {
+                        const status = res.statusCode;
+                        let totalPages = Math.ceil(totalCount / size)
+                        res.send({"error" : false,"message" : 'it works! We got all items',"pages": totalPages, status: status, result: data});
+                    }
+                });
+
+            })
+            
         } catch (err) {
 
             // 
@@ -49,8 +68,8 @@ export default class UserController {
 
             // 
             // Get data
-            const username: String = req.params.username;
-            let result = await Model.findOne({ username }).exec();
+            const _id: String = req.params._id;
+            let result = await Model.findOne({ _id }).exec();
             const status = res.statusCode;
 
             // 
@@ -65,7 +84,7 @@ export default class UserController {
             // 
             // Error response
             res.send({
-                message: 'Could not get Examples',
+                message: 'Could not the item ',
                 err: err
             });
         }
@@ -103,19 +122,19 @@ export default class UserController {
         await model.save();
 
         res.send({
-            message: 'Created!',
+            message: 'Item Created!',
             model: model
         });
     }
 
     public static async deleteItem(req: Request, res: Response, next: NextFunction) {
-        const _id:String = req.params;
+        const _id:String = req.params._id;
         
         try {
 
             // 
             // Get data
-            const username: String = req.params._id;
+            const id: String = req.params._id;
             let result = await Model.findOneAndRemove({ _id }, {
                 ...req.body,
                 deletedAt: new Date()
@@ -147,7 +166,7 @@ export default class UserController {
 
             // 
             // Get data
-            const username: String = req.params._id;
+            const _id: String = req.params._id;
             let result = await Model.findOneAndUpdate({ _id }, {
                 ...req.body,
                 updatedAt: new Date()

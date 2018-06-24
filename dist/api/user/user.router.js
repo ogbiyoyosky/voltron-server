@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var user_controller_1 = require("./user.controller");
+var passport = require("passport");
+var Passport = require('../../config/passport')(passport);
 var UserRouter = /** @class */ (function () {
     /*--------  Constructor  --------*/
     function UserRouter() {
@@ -17,7 +19,7 @@ var UserRouter = /** @class */ (function () {
     UserRouter.prototype.init = function () {
         this.router.put('/:username', user_controller_1.default.update);
         this.router.get('/', user_controller_1.default.getAll);
-        this.router.get('/:username', user_controller_1.default.getUser);
+        this.router.get('/:username', passport.authenticate('jwt', { session: false }), user_controller_1.default.getUser);
         this.router.post('/', user_controller_1.default.create);
         this.router.post('/authenticate', user_controller_1.default.authenticate);
     };

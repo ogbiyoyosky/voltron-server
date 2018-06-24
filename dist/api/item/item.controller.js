@@ -55,24 +55,43 @@ var UserController = /** @class */ (function () {
      */
     UserController.getAll = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var result, status_1, err_1;
+            var pageNo, size, query, result, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, item_model_1.default.find().exec()];
+                        pageNo = parseInt(req.query.pageNo);
+                        size = parseInt(req.query.size);
+                        query = {
+                            skip: size * (pageNo - 1),
+                            limit: size
+                        };
+                        _a.label = 1;
                     case 1:
-                        result = _a.sent();
-                        status_1 = res.statusCode;
-                        // 
-                        // Response
-                        res.send({
-                            message: 'it works! We got all items',
-                            result: result,
-                            status: status_1
-                        });
-                        return [3 /*break*/, 3];
+                        _a.trys.push([1, 3, , 4]);
+                        if (pageNo < 0 || pageNo === 0) {
+                            res.send({ "error": true, "message": "invalid page number, should start with 1" });
+                        }
+                        query.skip = size * (pageNo - 1);
+                        query.limit = size;
+                        return [4 /*yield*/, item_model_1.default.count({}, function (err, totalCount) {
+                                if (err) {
+                                    res.send({ "error": true, "message": "Error fetching data" });
+                                }
+                                item_model_1.default.find({}, {}, query, function (err, data) {
+                                    if (err) {
+                                        res.send({ "error": true, "message": "Error fetching data" });
+                                    }
+                                    else {
+                                        var status_1 = res.statusCode;
+                                        var totalPages = Math.ceil(totalCount / size);
+                                        res.send({ "error": false, "message": 'it works! We got all items', "pages": totalPages, status: status_1, result: data });
+                                    }
+                                });
+                            })];
                     case 2:
+                        result = _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
                         err_1 = _a.sent();
                         // 
                         // Error response
@@ -80,8 +99,8 @@ var UserController = /** @class */ (function () {
                             message: 'Could not get items',
                             err: err_1
                         });
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -94,13 +113,13 @@ var UserController = /** @class */ (function () {
      */
     UserController.getItem = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var username, result, status_2, err_2;
+            var _id, result, status_2, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        username = req.params.username;
-                        return [4 /*yield*/, item_model_1.default.findOne({ username: username }).exec()];
+                        _id = req.params._id;
+                        return [4 /*yield*/, item_model_1.default.findOne({ _id: _id }).exec()];
                     case 1:
                         result = _a.sent();
                         status_2 = res.statusCode;
@@ -117,7 +136,7 @@ var UserController = /** @class */ (function () {
                         // 
                         // Error response
                         res.send({
-                            message: 'Could not get Examples',
+                            message: 'Could not the item ',
                             err: err_2
                         });
                         return [3 /*break*/, 3];
@@ -162,7 +181,7 @@ var UserController = /** @class */ (function () {
                         // Save
                         _a.sent();
                         res.send({
-                            message: 'Created!',
+                            message: 'Item Created!',
                             model: model
                         });
                         return [2 /*return*/];
@@ -172,15 +191,15 @@ var UserController = /** @class */ (function () {
     };
     UserController.deleteItem = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _id, username, result, status_3, err_3;
+            var _id, id, result, status_3, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _id = req.params;
+                        _id = req.params._id;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        username = req.params._id;
+                        id = req.params._id;
                         return [4 /*yield*/, item_model_1.default.findOneAndRemove({ _id: _id }, __assign({}, req.body, { deletedAt: new Date() })).exec()];
                     case 2:
                         result = _a.sent();
@@ -209,7 +228,7 @@ var UserController = /** @class */ (function () {
     };
     UserController.updateItem = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _id, username, result, status_4, err_4;
+            var _id, _id_1, result, status_4, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -217,8 +236,8 @@ var UserController = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        username = req.params._id;
-                        return [4 /*yield*/, item_model_1.default.findOneAndUpdate({ _id: _id }, __assign({}, req.body, { updatedAt: new Date() })).exec()];
+                        _id_1 = req.params._id;
+                        return [4 /*yield*/, item_model_1.default.findOneAndUpdate({ _id: _id_1 }, __assign({}, req.body, { updatedAt: new Date() })).exec()];
                     case 2:
                         result = _a.sent();
                         status_4 = res.statusCode;

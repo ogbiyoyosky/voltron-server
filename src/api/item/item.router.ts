@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import ItemController from './item.controller';
 import * as passport from 'passport';
+let Passport = require('../../config/passport')(passport);
 
 export class ItemRouter {
 
@@ -27,7 +28,7 @@ export class ItemRouter {
      */
     init () {
         this.router.put('/:_id', ItemController.updateItem);
-        this.router.get('/', passport.authenticate('jwt', {session: false}), ItemController.getAll);
+        this.router.get('/', ItemController.getAll);
         this.router.get('/:_id', ItemController.getItem);
         this.router.post('/', ItemController.createItem);
         this.router.delete('/:_id', ItemController.deleteItem);

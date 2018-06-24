@@ -160,7 +160,9 @@ export default class UserController {
             type: "user",
             user,
             id: user._id,
-            token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
+            token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", ""),
+            message: "Account successfully created"
+
           }
         });
       })
@@ -292,9 +294,7 @@ export default class UserController {
                     data: {
                       type: "users",
                       id: user._id,
-                      attributes: {
-                        email: user['email']
-                      },
+                      user,
                       token: "JWT " + jwt.encode(UserController.userDataToPassInToken(user), process.env.SECRET, "HS256", "")
                     }
                   })
